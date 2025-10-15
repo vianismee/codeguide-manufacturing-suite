@@ -194,6 +194,284 @@ export type Database = {
                     },
                 ]
             }
+            material_categories: {
+                Row: {
+                    id: string
+                    name: string
+                    prefix: string
+                    description: string | null
+                    tenant_id: string
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    name: string
+                    prefix: string
+                    description?: string | null
+                    tenant_id?: string
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    name?: string
+                    prefix?: string
+                    description?: string | null
+                    tenant_id?: string
+                    created_at?: string
+                    updated_at?: string
+                }
+                Relationships: []
+            }
+            materials: {
+                Row: {
+                    id: string
+                    category_id: string
+                    name: string
+                    code: string
+                    description: string | null
+                    cost_per_unit: number
+                    unit_type: Database["public"]["Enums"]["unit_type"]
+                    material_type: Database["public"]["Enums"]["material_type"]
+                    supplier: string | null
+                    min_stock_level: number
+                    current_stock: number
+                    tenant_id: string
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    category_id: string
+                    name: string
+                    code: string
+                    description?: string | null
+                    cost_per_unit: number
+                    unit_type: Database["public"]["Enums"]["unit_type"]
+                    material_type: Database["public"]["Enums"]["material_type"]
+                    supplier?: string | null
+                    min_stock_level?: number
+                    current_stock?: number
+                    tenant_id?: string
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    category_id?: string
+                    name?: string
+                    code?: string
+                    description?: string | null
+                    cost_per_unit?: number
+                    unit_type?: Database["public"]["Enums"]["unit_type"]
+                    material_type?: Database["public"]["Enums"]["material_type"]
+                    supplier?: string | null
+                    min_stock_level?: number
+                    current_stock?: number
+                    tenant_id?: string
+                    created_at?: string
+                    updated_at?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "materials_category_id_fkey"
+                        columns: ["category_id"]
+                        isOneToOne: false
+                        referencedRelation: "material_categories"
+                        referencedColumns: ["id"]
+                    },
+                ]
+            }
+            formulas: {
+                Row: {
+                    id: string
+                    name: string
+                    description: string | null
+                    created_by: string
+                    tenant_id: string
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    name: string
+                    description?: string | null
+                    created_by: string
+                    tenant_id?: string
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    name?: string
+                    description?: string | null
+                    created_by?: string
+                    tenant_id?: string
+                    created_at?: string
+                    updated_at?: string
+                }
+                Relationships: []
+            }
+            formula_versions: {
+                Row: {
+                    id: string
+                    formula_id: string
+                    version_number: number
+                    is_active: boolean
+                    notes: string | null
+                    created_by: string
+                    tenant_id: string
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    formula_id: string
+                    version_number: number
+                    is_active?: boolean
+                    notes?: string | null
+                    created_by: string
+                    tenant_id?: string
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    formula_id?: string
+                    version_number?: number
+                    is_active?: boolean
+                    notes?: string | null
+                    created_by?: string
+                    tenant_id?: string
+                    created_at?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "formula_versions_formula_id_fkey"
+                        columns: ["formula_id"]
+                        isOneToOne: false
+                        referencedRelation: "formulas"
+                        referencedColumns: ["id"]
+                    },
+                ]
+            }
+            formula_ingredients: {
+                Row: {
+                    id: string
+                    formula_version_id: string
+                    material_id: string
+                    percentage: number
+                    tenant_id: string
+                    created_at: string
+                }
+                Insert: {
+                    id?: string
+                    formula_version_id: string
+                    material_id: string
+                    percentage: number
+                    tenant_id?: string
+                    created_at?: string
+                }
+                Update: {
+                    id?: string
+                    formula_version_id?: string
+                    material_id?: string
+                    percentage?: number
+                    tenant_id?: string
+                    created_at?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "formula_ingredients_formula_version_id_fkey"
+                        columns: ["formula_version_id"]
+                        isOneToOne: false
+                        referencedRelation: "formula_versions"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "formula_ingredients_material_id_fkey"
+                        columns: ["material_id"]
+                        isOneToOne: false
+                        referencedRelation: "materials"
+                        referencedColumns: ["id"]
+                    },
+                ]
+            }
+            manufacturing_products: {
+                Row: {
+                    id: string
+                    name: string
+                    description: string | null
+                    sku: string | null
+                    formula_version_id: string | null
+                    packaging_material_id: string | null
+                    label_material_id: string | null
+                    net_weight: number
+                    net_weight_unit: Database["public"]["Enums"]["unit_type"]
+                    cogs: number | null
+                    selling_price: number | null
+                    status: string
+                    tenant_id: string
+                    created_at: string
+                    updated_at: string
+                }
+                Insert: {
+                    id?: string
+                    name: string
+                    description?: string | null
+                    sku?: string | null
+                    formula_version_id?: string | null
+                    packaging_material_id?: string | null
+                    label_material_id?: string | null
+                    net_weight: number
+                    net_weight_unit?: Database["public"]["Enums"]["unit_type"]
+                    cogs?: number | null
+                    selling_price?: number | null
+                    status?: string
+                    tenant_id?: string
+                    created_at?: string
+                    updated_at?: string
+                }
+                Update: {
+                    id?: string
+                    name?: string
+                    description?: string | null
+                    sku?: string | null
+                    formula_version_id?: string | null
+                    packaging_material_id?: string | null
+                    label_material_id?: string | null
+                    net_weight?: number
+                    net_weight_unit?: Database["public"]["Enums"]["unit_type"]
+                    cogs?: number | null
+                    selling_price?: number | null
+                    status?: string
+                    tenant_id?: string
+                    created_at?: string
+                    updated_at?: string
+                }
+                Relationships: [
+                    {
+                        foreignKeyName: "manufacturing_products_formula_version_id_fkey"
+                        columns: ["formula_version_id"]
+                        isOneToOne: false
+                        referencedRelation: "formula_versions"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "manufacturing_products_packaging_material_id_fkey"
+                        columns: ["packaging_material_id"]
+                        isOneToOne: false
+                        referencedRelation: "materials"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "manufacturing_products_label_material_id_fkey"
+                        columns: ["label_material_id"]
+                        isOneToOne: false
+                        referencedRelation: "materials"
+                        referencedColumns: ["id"]
+                    },
+                ]
+            }
         }
         Views: {
             [_ in never]: never
@@ -202,6 +480,24 @@ export type Database = {
             requesting_user_id: {
                 Args: Record<PropertyKey, never>
                 Returns: string
+            }
+            generate_material_code: {
+                Args: {
+                    p_category_prefix: string
+                }
+                Returns: string
+            }
+            validate_formula_percentages: {
+                Args: {
+                    p_formula_version_id: string
+                }
+                Returns: boolean
+            }
+            calculate_product_cogs: {
+                Args: {
+                    p_product_id: string
+                }
+                Returns: number
             }
         }
         Enums: {
@@ -216,6 +512,8 @@ export type Database = {
             | "past_due"
             | "unpaid"
             | "paused"
+            material_type: "raw_material" | "packaging" | "label"
+            unit_type: "kg" | "g" | "l" | "ml" | "units" | "meters" | "cm"
         }
         CompositeTypes: {
             [_ in never]: never
@@ -319,4 +617,3 @@ export type CompositeTypes<
     : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
     ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
     : never
-
