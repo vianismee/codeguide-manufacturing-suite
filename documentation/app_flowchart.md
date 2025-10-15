@@ -1,0 +1,22 @@
+flowchart TD
+  A[User] --> B[Login Page]
+  B --> C[Authenticate]
+  C --> D[Dashboard]
+  D --> E[Inventory Module]
+  E --> E1[View Materials]
+  E --> E2[Add Material]
+  D --> F[Formulation Module]
+  F --> F1[Create Formula]
+  F --> F2[View Versions]
+  F1 --> G[Save Formula]
+  G --> H[Server Save To Data Base]
+  H --> I[Version Created]
+  G --> J[Trigger COGS Calculation]
+  J --> K[Calculate COGS]
+  K --> L[Save COGS To Products]
+  D --> M[Products Module]
+  M --> M1[Define Finished Good]
+  M1 --> J
+  D --> N[Subscription]
+  N --> O[Stripe Webhook]
+  O --> D
